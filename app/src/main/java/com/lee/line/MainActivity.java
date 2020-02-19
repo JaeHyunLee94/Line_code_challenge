@@ -2,105 +2,101 @@ package com.lee.line;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.lee.line.adapter.ListAdapter;
-import com.lee.line.memo.Memo;
+import com.lee.line.code.RequestCode;
+import com.lee.line.code.ResultCode;
+import com.lee.line.data.Memo;
+import com.lee.line.dialog.DetailDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
+{
 
-    List<Memo> memo_list=new ArrayList<>();
+
+    List<Memo> memo_list = new ArrayList<>();
     View list_item;
     RecyclerView main_rv;
     DetailDialog dialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        main_rv=findViewById(R.id.rv);
-        dialog=new DetailDialog(this);
+        main_rv = findViewById(R.id.rv);
+        dialog = new DetailDialog(this);
 
 
+        fab.setOnClickListener(this);
+
+        //onActivityResult(); 로 결과 받기
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,WriteActivity.class);
-                startActivity(intent);
+        memo_list.add(new Memo("title", "saersaer"));
+        memo_list.add(new Memo("title", "saersaer"));
+        memo_list.add(new Memo("title", "saersaer"));
+        memo_list.add(new Memo("title", "saersaer"));
+        memo_list.add(new Memo("title", "saersaer"));
 
-            }
-        });
-
-
-
-        memo_list.add(new Memo("title","saersaer"));
-        memo_list.add(new Memo("title","saersaer"));
-        memo_list.add(new Memo("title","saersaer"));
-        memo_list.add(new Memo("title","saersaer"));
-        memo_list.add(new Memo("title","saersaer"));
-
-        main_rv.setAdapter(new ListAdapter(memo_list,dialog));
+        main_rv.setAdapter(new ListAdapter(memo_list, dialog));
         main_rv.setLayoutManager(new LinearLayoutManager(this));
 
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode) {
+            case ResultCode.RESULT_EDIT_COMPLETED:
+
+                break;
+            case ResultCode.RESULT_EMPTY:
+
+                break;
+            case ResultCode.RESULT_NEW_COMPLETED:
+
+                break;
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onClick(View v) {
+        Intent intent = new Intent(MainActivity.this, WriteActivity.class);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (v.getId()){
+            case R.id.fab:
+
+                startActivityForResult(intent, RequestCode.REQUEST_NEW_MEMO);
+
+                break;
+
+            case R.id.btn_edit:
+                startActivityForResult(intent, RequestCode.REQUEST_EDIT_MEMO);
+                break;
+            case R.id.btn_delete:
+
+                break;
+
+            default:
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
     }
+
+
 }

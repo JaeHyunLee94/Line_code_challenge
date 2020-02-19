@@ -10,9 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lee.line.DetailDialog;
+import com.lee.line.dialog.DetailDialog;
 import com.lee.line.R;
-import com.lee.line.memo.Memo;
+import com.lee.line.data.Memo;
 
 import java.util.List;
 
