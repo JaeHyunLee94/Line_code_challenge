@@ -16,7 +16,6 @@ public class Memo {
         this.title=title;
         this.content=content;
         this.imglist= new ArrayList<>();
-        imglist.add("https://t1.daumcdn.net/cfile/tistory/2542444858F57E0B33");
     }
 
 
@@ -25,6 +24,9 @@ public class Memo {
         this.content = content;
     }
 
+    public void setImglist(ArrayList<String> imglist) {
+        this.imglist = imglist;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -33,6 +35,10 @@ public class Memo {
 
     public boolean isImgEmpty(){
         return this.imglist.isEmpty();
+    }
+
+    public ArrayList<String> getImglist() {
+        return imglist;
     }
 
     public String getImgThumbnail(){

@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         String title;
         String content;
+        ArrayList<String> img_list;
         int pos;
         switch (resultCode) {
 
@@ -110,10 +111,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 title = (String) data.getStringExtra("title");
                 content = (String) data.getStringExtra("content");
+
+                img_list=(ArrayList<String>) data.getExtras().get("img_list");
                 pos = data.getIntExtra("pos", -1);
 
-                memo_list.set(pos, new Memo(title, content));// 객체 생성 않고 바꾸기??
+                Memo m=new Memo(title,content);
+                m.setImglist(img_list);
 
+                memo_list.set(pos, m);// 객체 생성 않고 바꾸기??
 
                 adapter.notifyItemChanged(pos);//뒤로가기 버튼 누르기
 
@@ -124,13 +129,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 title = (String) data.getExtras().get("title");
                 content = (String) data.getExtras().get("content");
+                img_list=(ArrayList<String>) data.getExtras().get("img_list");
 
                 Memo a = new Memo(title, content);
+                a.setImglist(img_list);
 
                 memo_list.add(a);
                 adapter.notifyDataSetChanged();
-
-
                 break;
             case ResultCode.RESULT_DELETE_MEMO:
                 pos=data.getIntExtra("pos",-1);
@@ -165,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("title", memo_list.get(pos).getTitle());
         intent.putExtra("content", memo_list.get(pos).getContent());
         intent.putExtra("pos", pos);
+        intent.putExtra("img_list",memo_list.get(pos).getImglist());
 
         startActivityForResult(intent, RequestCode.REQUEST_DETAIL);
 

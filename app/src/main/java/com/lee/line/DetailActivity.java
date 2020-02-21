@@ -10,9 +10,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.lee.line.adapter.ImageAdapter;
 import com.lee.line.code.RequestCode;
 import com.lee.line.code.ResultCode;
+
+import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,8 +28,16 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     TextView title_box;
     TextView content_box;
 
+    RecyclerView detail_rv;
+
+    GridLayoutManager manager;
+    ImageAdapter adapter;
+
+
+
     String title;
     String content;
+    ArrayList<String> img_list;
     int pos;
 
     @Override
@@ -36,15 +49,26 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         btn_edit = findViewById(R.id.detail_btn_edit);
         title_box = findViewById(R.id.detail_title);
         content_box = findViewById(R.id.detail_content);
+        detail_rv=findViewById(R.id.rv_detail_img);
 
         btn_edit.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
+
+
+
+
 
         Intent arrived_intent = getIntent();
 
         title = arrived_intent.getStringExtra("title");
         content = arrived_intent.getStringExtra("content");
         pos = arrived_intent.getIntExtra("pos", -1); //에러 처
+        img_list=(ArrayList<String>) arrived_intent.getExtras().get("img_list");
+
+        adapter=new ImageAdapter(getApplicationContext(),img_list);
+        manager=new GridLayoutManager(getApplicationContext(),3);
+        detail_rv.setAdapter(adapter);
+        detail_rv.setLayoutManager(manager);
 
         title_box.setText(title);
         content_box.setText(content);
@@ -60,15 +84,20 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
             title = data.getStringExtra("title");
             content = data.getStringExtra("content");
+            img_list.clear();
+            img_list.addAll((ArrayList<String>) data.getExtras().get("img_list"));
+            adapter.notifyDataSetChanged();
 
             title_box.setText(title);
             content_box.setText(content);
+
 
 
             Intent intent = new Intent();
             intent.putExtra("title", title);
             intent.putExtra("content", content);
             intent.putExtra("pos", pos);
+            intent.putExtra("img_list",img_list);
             setResult(resultCode, intent);
         }
 
@@ -88,6 +117,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("REQUEST_CODE", RequestCode.REQUEST_EDIT_MEMO);
                 intent.putExtra("title", title);
                 intent.putExtra("content", content);
+                intent.putExtra("img_list",img_list);
                 startActivityForResult(intent, RequestCode.REQUEST_EDIT_MEMO);
                 break;
 
