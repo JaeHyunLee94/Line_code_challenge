@@ -1,16 +1,17 @@
 package com.lee.line.adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.lee.line.dialog.DetailDialog;
+import com.bumptech.glide.Glide;
 import com.lee.line.R;
 import com.lee.line.data.Memo;
 
@@ -19,11 +20,16 @@ import java.util.List;
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     List<Memo> datas;
-    DetailDialog dialog;
+    OnitemClickInterface listner;
 
-    public ListAdapter(List<Memo> datas,DetailDialog dialog){
-        this.datas=datas;
-        this.dialog=dialog;
+    public interface OnitemClickInterface {
+        void onItemClick(View v, int pos);
+    }
+
+
+    public ListAdapter(List<Memo> datas, OnitemClickInterface listner) {
+        this.datas = datas;
+        this.listner = listner;
     }
 
     @NonNull
@@ -31,13 +37,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        Context context = parent.getContext() ;
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
+        Context context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.memo_item, parent, false) ;
-        ViewHolder vh = new ViewHolder(view) ;
+        View view = inflater.inflate(R.layout.memo_item, parent, false);
+        ViewHolder vh = new ViewHolder(view);
 
-        return vh ;
+        return vh;
     }
 
     @Override
@@ -50,27 +56,33 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         return datas.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
+
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView title;
         TextView content;
+        ImageView thumbnail;
 
 
         public ViewHolder(@NonNull View itemView) {
 
             super(itemView);
-            this.title=(TextView)itemView.findViewById(R.id.list_title);
-            this.content=(TextView) itemView.findViewById(R.id.list_content);
+            this.title = itemView.findViewById(R.id.list_title);
+            this.content = itemView.findViewById(R.id.list_content);
+            this.thumbnail=itemView.findViewById(R.id.list_thumbnail);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    int pos = getAdapterPosition() ;
+                    int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
-                        Memo clicked_memo=datas.get(pos);
-                        Log.e("clicked: ",""+pos);
-                        dialog.show();
+
+                        listner.onItemClick(v,pos);
+
+//                        Memo clicked_memo = datas.get(pos);
+//                        Log.e("clicked: ", "" + pos);
+
 
                     }
 
@@ -80,9 +92,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         }
 
         public void bind(Memo m) {
-            Log.e("bind",m.getTitle());
+
+
             this.title.setText(m.getTitle());
             this.content.setText(m.getContent());
+
+            if(!m.isImgEmpty()){
+                Glide.with(itemView.getContext()).load(Uri.parse(m.getImgThumbnail())).into(this.thumbnail);
+            }
+
         }
     }
 }
