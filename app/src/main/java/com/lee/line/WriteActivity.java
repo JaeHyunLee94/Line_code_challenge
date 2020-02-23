@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -192,6 +193,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
 
         final EditText name = new EditText(this);
+        name.setTextColor(Color.BLACK);
         alert.setView(name);
 
         alert.setPositiveButton("입력", new DialogInterface.OnClickListener() {
