@@ -13,10 +13,15 @@
         <item name="android:radioButtonStyle">@style/RadioButtonStyle</item>
         <item name="android:checkboxStyle">@style/CheckboxStyle</item>
 
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+
+
+
 
 
     </style>
-
     <!-- Custom font style 일괄적용 -->
     <style name="TextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/bmjua_otf</item>
@@ -41,10 +46,13 @@
     </style>
 
 
+
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

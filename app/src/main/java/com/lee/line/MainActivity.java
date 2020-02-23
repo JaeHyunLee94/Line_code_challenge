@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.lee.line.adapter.ListAdapter;
+import com.lee.line.code.FreeMemoryCode;
 import com.lee.line.code.RequestCode;
 import com.lee.line.code.ResultCode;
 import com.lee.line.data.Memo;
@@ -22,7 +24,12 @@ import com.lee.line.dialog.SelectActionDialog;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static com.lee.line.util.ResourceManager.free_memory;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ListAdapter.OnitemClickInterface, ListAdapter.OnitemLongClickInterface {
+
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long   backPressedTime = 0;
 
 
     ArrayList<Memo> memo_list;
@@ -41,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
 
-
         FloatingActionButton fab = findViewById(R.id.fab);
 
         main_rv = findViewById(R.id.rv);
@@ -49,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         memo_list = load_memo();
 
-        adapter = new ListAdapter(memo_list, this,this);
+        adapter = new ListAdapter(this, memo_list, this, this);
 
 
         fab.setOnClickListener(this);
@@ -59,14 +65,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         main_rv.setLayoutManager(new LinearLayoutManager(this));
 
 
-
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         save_memo();
+    }
+
+    @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime)
+        {
+            super.onBackPressed();
+        }
+        else
+        {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "한번 더 뒤로가기 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     private void save_memo() {
@@ -117,10 +139,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 title = (String) data.getStringExtra("title");
                 content = (String) data.getStringExtra("content");
 
-                img_list=(ArrayList<String>) data.getExtras().get("img_list");
+                img_list = (ArrayList<String>) data.getExtras().get("img_list");
                 pos = data.getIntExtra("pos", -1);
 
-                Memo m=new Memo(title,content);
+                Memo m = new Memo(title, content);
                 m.setImglist(img_list);
 
                 memo_list.set(pos, m);// 객체 생성 않고 바꾸기??
@@ -134,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 title = (String) data.getExtras().get("title");
                 content = (String) data.getExtras().get("content");
-                img_list=(ArrayList<String>) data.getExtras().get("img_list");
+                img_list = (ArrayList<String>) data.getExtras().get("img_list");
 
                 Memo a = new Memo(title, content);
                 a.setImglist(img_list);
@@ -142,8 +164,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 memo_list.add(a);
                 adapter.notifyDataSetChanged();
                 break;
+
             case ResultCode.RESULT_DELETE_MEMO:
-                pos=data.getIntExtra("pos",-1);
+
+                pos = data.getIntExtra("pos", -1);
+
+                free_memory(this,memo_list.get(pos).getImglist(), -1, FreeMemoryCode.MODE_FREE_ALL);
                 memo_list.remove(pos);
                 adapter.notifyItemRemoved(pos);
                 break;
@@ -175,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.putExtra("title", memo_list.get(pos).getTitle());
         intent.putExtra("content", memo_list.get(pos).getContent());
         intent.putExtra("pos", pos);
-        intent.putExtra("img_list",memo_list.get(pos).getImglist());
+        intent.putExtra("img_list", memo_list.get(pos).getImglist());
 
         startActivityForResult(intent, RequestCode.REQUEST_DETAIL);
 
@@ -184,10 +210,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemLongClick(View v, int pos) {
 
-        selectdialog=new SelectActionDialog(this,pos,memo_list,adapter);
+        selectdialog = new SelectActionDialog(this, pos, memo_list, adapter);
         selectdialog.show();
 
     }
+
+
 
 
 }

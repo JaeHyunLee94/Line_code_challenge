@@ -25,6 +25,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     Context context;
     Button btn_edit;
     Button btn_delete;
+    Button btn_back;
 
     TextView title_box;
     TextView content_box;
@@ -51,12 +52,14 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         title_box = findViewById(R.id.detail_title);
         content_box = findViewById(R.id.detail_content);
         detail_rv=findViewById(R.id.rv_detail_img);
+        btn_back=findViewById(R.id.detail_btn_back);
 
         title_box.setMovementMethod(new ScrollingMovementMethod());
         content_box.setMovementMethod(new ScrollingMovementMethod());
 
         btn_edit.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
+        btn_back.setOnClickListener(this);
 
 
 
@@ -134,6 +137,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 finish();
                 break;
 
+            case R.id.detail_btn_back:
+                finish();
 
         }
 

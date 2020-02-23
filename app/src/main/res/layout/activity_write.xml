@@ -6,18 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".WriteActivity"
     android:padding="10dp"
+    android:background="@color/colorMainbackgound"
     >
 
+    <TextView
+        android:id="@+id/write_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:fontFamily="@font/bmjua_otf"
+        android:text="메모 작성중..."
+        android:textSize="20sp"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/view_shape"
+        android:padding="10dp"
+        ></TextView>
+
     <EditText
+        android:layout_marginTop="10dp"
         android:padding="5dp"
         android:background="@drawable/contents_box_shape"
         android:id="@+id/write_title"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:textSize="15sp"
-        android:hint="제목"
+        android:hint="@string/title_hint"
         android:fontFamily="@font/bmjua_otf"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/write_bar"
         android:maxLines="1"
         android:inputType="text"
         app:layout_constraintRight_toRightOf="parent"
@@ -33,11 +52,12 @@
         android:background="@drawable/contents_box_shape"
         android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:hint="sting value 에 추가할것"
+        android:hint="@string/content_hint"
         android:textStyle="normal"
-        android:layout_height="400dp"
+        android:layout_height="370dp"
         app:layout_constraintTop_toBottomOf="@id/write_title"
         app:layout_constraintLeft_toLeftOf="parent"
+
         ></EditText>
 
 
@@ -67,7 +87,8 @@
         android:text="이미지 추가"
         android:background="@drawable/view_shape"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/btn_save"
+        android:layout_marginRight="20dp"
         ></Button>
 
 
@@ -87,10 +108,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/btn_save"
-        android:layout_marginRight="20dp"
-        android:text="취소"
-
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="뒤로가기"
         ></Button>
 
 

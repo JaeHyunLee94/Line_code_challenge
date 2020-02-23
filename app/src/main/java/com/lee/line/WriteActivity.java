@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
 import com.lee.line.adapter.ImageAdapter;
+import com.lee.line.code.FreeMemoryCode;
 import com.lee.line.code.RequestCode;
 import com.lee.line.code.ResultCode;
 import com.lee.line.dialog.ChangeImageDialog;
@@ -41,6 +42,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.lee.line.util.ResourceManager.free_memory;
 
 
 public class WriteActivity extends AppCompatActivity implements View.OnClickListener, ImageAdapter.OnitemClickInterface, ImageAdapter.OnitemLongClickInterface {
@@ -136,8 +139,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 for (int i = 0; i < clipData.getItemCount(); i++) {
 
                     Uri urione = clipData.getItemAt(i).getUri();
-
-
                     String new_path = "";
                     try {
                         new_path = save_to_app(urione);
@@ -181,9 +182,7 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                 break;
 
             case R.id.btn_cancel:
-
-                Toast.makeText(this, "cancel clicked", Toast.LENGTH_SHORT).show();
-                finish();
+                confirm_cancel();
                 break;
 
 
@@ -194,6 +193,31 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
 
         }
+    }
+
+    private void confirm_cancel() {
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle(this.getResources().getString(R.string.alert_back_message));
+
+
+        alert.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+                finish();
+            }
+        });
+
+
+        alert.setNegativeButton("계속 작성하기", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+            }
+        });
+
+        alert.show();
     }
 
 
@@ -252,8 +276,6 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
         alert.setPositiveButton("입력", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Log.e("sdf", name.getText().toString());
-
                 //add_or_replace_img(-1,name.getText().toString(),RequestCode.RE);
                 img_list.add(name.getText().toString());
                 adapter.notifyDataSetChanged(); //위치 중요
@@ -272,6 +294,10 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
+    @Override
+    public void onBackPressed() {
+        confirm_cancel();
+    }
 
     public void goToAlbum() {
 
@@ -397,6 +423,8 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void remove_img(int pos) {
+
+        free_memory(this,img_list,pos, FreeMemoryCode.MODE_FREE_ONE);
         img_list.remove(pos);
         adapter.notifyItemRemoved(pos);
     }

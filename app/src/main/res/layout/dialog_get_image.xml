@@ -40,6 +40,16 @@
         android:text="URL로 가져오기"
 
         ></Button>
+    <Button
+        android:padding="5dp"
+        android:layout_margin="20dp"
+        android:id="@+id/btn_cancel"
+        android:layout_width="150dp"
+        android:background="@drawable/contents_box_shape"
+        android:layout_height="wrap_content"
+        android:text="닫기"
+
+        ></Button>
 
 
 

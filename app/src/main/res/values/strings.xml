@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">line</string>
     <string name="action_settings">Settings</string>
+    <string name="title_hint">title</string>
+    <string name="content_hint">content</string>
+    <string name="alert_back_message">변경사항이 저장되지 않습니다. 계속하시겠습니까?</string>
 </resources>

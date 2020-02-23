@@ -18,6 +18,7 @@ public class GetImageDialog extends Dialog implements View.OnClickListener {
     Button btn_camera;
     Button btn_album;
     Button btn_url;
+    Button btn_cancel;
 
     int mode;
 
@@ -42,6 +43,7 @@ public class GetImageDialog extends Dialog implements View.OnClickListener {
         btn_camera=findViewById(R.id.btn_camera);
         btn_album=findViewById(R.id.btn_album);
         btn_url=findViewById(R.id.btn_url);
+        btn_cancel=findViewById(R.id.btn_cancel);
 
 
         setClickEvent();
@@ -54,6 +56,7 @@ public class GetImageDialog extends Dialog implements View.OnClickListener {
         btn_url.setOnClickListener(this);
         btn_album.setOnClickListener(this);
         btn_camera.setOnClickListener(this);
+        btn_cancel.setOnClickListener(this);
 
     }
 
@@ -71,12 +74,14 @@ public class GetImageDialog extends Dialog implements View.OnClickListener {
             case R.id.btn_album:
                 this.dismiss();
                 ((WriteActivity)context).goToAlbum();
-
                 break;
 
             case R.id.btn_url:
                 this.dismiss();
                 ((WriteActivity)context).getURL();
+                break;
+            case R.id.btn_cancel:
+                this.dismiss();
                 break;
         }
 
