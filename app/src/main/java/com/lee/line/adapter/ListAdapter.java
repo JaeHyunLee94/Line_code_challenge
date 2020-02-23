@@ -21,15 +21,21 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
     List<Memo> datas;
     OnitemClickInterface listner;
+    OnitemLongClickInterface long_listner;
 
     public interface OnitemClickInterface {
         void onItemClick(View v, int pos);
     }
 
+    public interface OnitemLongClickInterface {
+        void onItemLongClick(View v, int pos);
+    }
 
-    public ListAdapter(List<Memo> datas, OnitemClickInterface listner) {
+
+    public ListAdapter(List<Memo> datas, OnitemClickInterface listner,OnitemLongClickInterface long_listner) {
         this.datas = datas;
         this.listner = listner;
+        this.long_listner=long_listner;
     }
 
     @NonNull
@@ -41,9 +47,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.memo_item, parent, false);
-        ViewHolder vh = new ViewHolder(view);
 
-        return vh;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -70,6 +75,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             this.title = itemView.findViewById(R.id.list_title);
             this.content = itemView.findViewById(R.id.list_content);
             this.thumbnail=itemView.findViewById(R.id.list_thumbnail);
+            this.thumbnail.setClipToOutline(true);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,8 +90,25 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 //                        Log.e("clicked: ", "" + pos);
 
 
+
                     }
 
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+
+                        long_listner.onItemLongClick(v,pos);
+
+
+
+                    }
+                    return true;
                 }
             });
 

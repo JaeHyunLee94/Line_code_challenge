@@ -38,15 +38,13 @@ dependencies {
     implementation 'gun0912.ted:tedpermission:2.2.3'
     //implementation 'gun0912.ted:tedimagepicker:1.0.12'
 
-    implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.8.0'
+    //implementation 'com.github.esafirm.android-image-picker:rximagepicker:1.8.0'
 
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'org.jetbrains:annotations-java5:15.0'
 
 
 }
-
-

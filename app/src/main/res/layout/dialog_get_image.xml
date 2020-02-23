@@ -2,34 +2,42 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/memo_item_shape"
-    android:padding="30dp">
+    android:background="@drawable/dialog_box_shape"
+    android:id="@+id/dialog_parent"
+    android:padding="15dp"
+    >
 
 
     <Button
-        android:layout_margin="20dp"
+        android:layout_margin="15dp"
+        android:padding="5dp"
         android:id="@+id/btn_camera"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="카메라에서 가져오기"
+        android:background="@drawable/contents_box_shape"
 
         ></Button>
 
     <Button
+        android:padding="5dp"
         android:layout_margin="20dp"
         android:id="@+id/btn_album"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/contents_box_shape"
         android:text="앨범에서 가져오기"
 
         ></Button>
 
     <Button
+        android:padding="5dp"
         android:layout_margin="20dp"
         android:id="@+id/btn_url"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
+        android:background="@drawable/contents_box_shape"
         android:layout_height="wrap_content"
-        android:text="이미지 url 로 가져오기"
+        android:text="URL로 가져오기"
 
         ></Button>
 

@@ -20,15 +20,24 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     ArrayList<String> img_list;
     Context context;
 
+    OnitemLongClickInterface long_listner;
+    OnitemClickInterface listner;
 
 
+    public interface OnitemClickInterface {
+        void onItemClick(View v, int pos);
+    }
+
+    public interface OnitemLongClickInterface {
+        void onItemLongClick(View v, int pos);
+    }
 
 
-
-    public ImageAdapter(Context context, ArrayList<String> img_list) {
+    public ImageAdapter(Context context, ArrayList<String> img_list, OnitemClickInterface listner, OnitemLongClickInterface long_listner) {
         this.context = context;
         this.img_list = img_list;
-
+        this.long_listner = long_listner;
+        this.listner = listner;
     }
 
 
@@ -59,6 +68,35 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.grid_img);
+            image.setClipToOutline(true);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+
+                        listner.onItemClick(v, pos);
+
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+
+                        long_listner.onItemLongClick(v,pos);
+
+
+
+                    }
+                    return true;
+                }
+            });
 
 
         }

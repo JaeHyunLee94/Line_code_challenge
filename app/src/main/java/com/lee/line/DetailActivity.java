@@ -3,6 +3,7 @@ package com.lee.line;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import com.lee.line.code.ResultCode;
 
 import java.util.ArrayList;
 
-public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class DetailActivity extends AppCompatActivity implements View.OnClickListener,ImageAdapter.OnitemLongClickInterface,ImageAdapter.OnitemClickInterface{
 
     Context context;
     Button btn_edit;
@@ -51,6 +52,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         content_box = findViewById(R.id.detail_content);
         detail_rv=findViewById(R.id.rv_detail_img);
 
+        title_box.setMovementMethod(new ScrollingMovementMethod());
+        content_box.setMovementMethod(new ScrollingMovementMethod());
+
         btn_edit.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
 
@@ -65,7 +69,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         pos = arrived_intent.getIntExtra("pos", -1); //에러 처
         img_list=(ArrayList<String>) arrived_intent.getExtras().get("img_list");
 
-        adapter=new ImageAdapter(getApplicationContext(),img_list);
+        adapter=new ImageAdapter(getApplicationContext(),img_list,this,this);
         manager=new GridLayoutManager(getApplicationContext(),3);
         detail_rv.setAdapter(adapter);
         detail_rv.setLayoutManager(manager);
@@ -134,5 +138,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
 
 
+    }
+
+    @Override
+    public void onItemClick(View v, int pos) {
+        Intent intent=new Intent(this,FullScreenActivity.class);
+        intent.putExtra("imguri",img_list.get(pos));
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void onItemLongClick(View v, int pos) {
+        return;
     }
 }

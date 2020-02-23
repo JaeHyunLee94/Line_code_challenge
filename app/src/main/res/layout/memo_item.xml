@@ -3,15 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/memo_item_shape"
+
     android:layout_margin="10dp"
     >
 
     <ImageView
-        android:scaleType="fitXY"
+        android:layout_margin="2dp"
+
+        android:scaleType="centerCrop"
         android:id="@+id/list_thumbnail"
         android:layout_width="200dp"
-        android:src="@color/colorAccent"
+
+        android:background="@drawable/contents_box_shape"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="match_parent"
@@ -19,6 +22,8 @@
 
 
     <TextView
+        android:layout_margin="2dp"
+        android:background="@drawable/contents_box_shape"
         android:id="@+id/list_title"
         android:padding="8dp"
         android:text="제목"
@@ -31,7 +36,10 @@
 
 
     <TextView
+        android:layout_margin="2dp"
+        android:background="@drawable/contents_box_shape"
         android:id="@+id/list_content"
+        android:padding="8dp"
         android:text="내용"
         android:layout_width="0dp"
         android:layout_height="0dp"

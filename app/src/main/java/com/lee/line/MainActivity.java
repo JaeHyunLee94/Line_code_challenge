@@ -17,12 +17,12 @@ import com.lee.line.adapter.ListAdapter;
 import com.lee.line.code.RequestCode;
 import com.lee.line.code.ResultCode;
 import com.lee.line.data.Memo;
-
+import com.lee.line.dialog.SelectActionDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, ListAdapter.OnitemClickInterface {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, ListAdapter.OnitemClickInterface, ListAdapter.OnitemLongClickInterface {
 
 
     ArrayList<Memo> memo_list;
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String FILE_NAME = "memo_file";
     String SP_KEY_NAME = "memo_list";
+    SelectActionDialog selectdialog;
     SharedPreferences sp;
     ListAdapter adapter;
 
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         FloatingActionButton fab = findViewById(R.id.fab);
 
         main_rv = findViewById(R.id.rv);
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         memo_list = load_memo();
 
-        adapter = new ListAdapter(memo_list, this);
+        adapter = new ListAdapter(memo_list, this,this);
 
 
         fab.setOnClickListener(this);
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         main_rv.setAdapter(adapter);
         main_rv.setLayoutManager(new LinearLayoutManager(this));
+
+
 
 
     }
@@ -175,4 +180,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         startActivityForResult(intent, RequestCode.REQUEST_DETAIL);
 
     }
+
+    @Override
+    public void onItemLongClick(View v, int pos) {
+
+        selectdialog=new SelectActionDialog(this,pos,memo_list,adapter);
+        selectdialog.show();
+
+    }
+
+
 }

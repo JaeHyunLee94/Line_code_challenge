@@ -8,7 +8,7 @@
 
     <ImageView
 
-        android:background="@drawable/memo_item_shape"
+        android:background="@drawable/view_shape"
         android:id="@+id/grid_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
