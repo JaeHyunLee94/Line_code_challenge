@@ -25,7 +25,7 @@
         </activity>
         <activity android:name=".FullScreenActivity" />
 
-        <provider
+        ./gradlew assembleRelease        <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.lee.line"
             android:exported="false"
