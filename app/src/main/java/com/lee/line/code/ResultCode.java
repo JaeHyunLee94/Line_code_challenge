@@ -1,5 +1,7 @@
 package com.lee.line.code;
 
+//반환 코드
+
 public class ResultCode {
 
     public static final int RESULT_EDIT_COMPLETED=33;

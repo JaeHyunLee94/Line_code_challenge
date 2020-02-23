@@ -6,6 +6,11 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/*
+메모 데이터 클래스
+제목,내용,이미지 uri 리스트 를 가지고 있음
+ */
+
 public class Memo {
 
     String title;

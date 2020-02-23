@@ -23,15 +23,14 @@ import java.util.ArrayList;
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener,ImageAdapter.OnitemLongClickInterface,ImageAdapter.OnitemClickInterface{
 
     Context context;
+
     Button btn_edit;
     Button btn_delete;
     Button btn_back;
-
     TextView title_box;
     TextView content_box;
 
     RecyclerView detail_rv;
-
     GridLayoutManager manager;
     ImageAdapter adapter;
 
@@ -67,11 +66,15 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         Intent arrived_intent = getIntent();
 
+
+        //부모 액티비티에서 데이터 받아오기
         title = arrived_intent.getStringExtra("title");
         content = arrived_intent.getStringExtra("content");
         pos = arrived_intent.getIntExtra("pos", -1); //에러 처
         img_list=(ArrayList<String>) arrived_intent.getExtras().get("img_list");
 
+
+        //리사이클러 뷰 설정
         adapter=new ImageAdapter(getApplicationContext(),img_list,this,this);
         manager=new GridLayoutManager(getApplicationContext(),3);
         detail_rv.setAdapter(adapter);
@@ -88,6 +91,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == ResultCode.RESULT_EDIT_COMPLETED) {
+            //편집이 끝났을 경우 업데이트
 
             title = data.getStringExtra("title");
             content = data.getStringExtra("content");
@@ -153,6 +157,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         startActivity(intent);
     }
 
+    //상세보기 액티비티에서는 길게 클릭해도 아무 이벤트 발생하지 않음
     @Override
     public void onItemLongClick(View v, int pos) {
         return;

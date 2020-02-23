@@ -14,6 +14,11 @@ import com.lee.line.data.Memo;
 
 import java.util.ArrayList;
 
+/*
+메인 액티비티에서
+메모를 삭제할 건지 묻는 다이얼로그
+ */
+
 public class SelectActionDialog extends Dialog implements View.OnClickListener {
     Context context;
     Button delete_btn;
@@ -46,7 +51,6 @@ public class SelectActionDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.dialog_btn_delete) {
-
             memo_list.remove(pos);
             adapter.notifyItemRemoved(pos);
 

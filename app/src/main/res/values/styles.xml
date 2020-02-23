@@ -16,12 +16,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
 
-
-
-
-
-
     </style>
+
+
     <!-- Custom font style 일괄적용 -->
     <style name="TextViewStyle" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/bmjua_otf</item>
@@ -41,8 +38,14 @@
     </style>
 
     <style name="CheckboxStyle" parent="@android:style/Widget.DeviceDefault.CompoundButton.CheckBox">
-    <item name="android:fontFamily">@font/bmjua_otf</item>
+        <item name="android:fontFamily">@font/bmjua_otf</item>
 
+    </style>
+    <!--    Custom font-->
+
+    <!-- Splash theme. -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
 

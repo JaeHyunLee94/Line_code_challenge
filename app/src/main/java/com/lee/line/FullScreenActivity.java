@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 
+//사진 클릭시 띄워지는 전체화면
+
 public class FullScreenActivity extends AppCompatActivity {
 
     ImageView img_view;

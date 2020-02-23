@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import com.lee.line.R;
 import com.lee.line.WriteActivity;
 
+/*
+    WriteActivity 에서 이미지를 얻어오는 방법을 묻는 다이얼로그
+ */
+
 public class GetImageDialog extends Dialog implements View.OnClickListener {
 
     Context context;

@@ -24,6 +24,9 @@ import com.lee.line.R;
 import com.lee.line.data.Memo;
 
 import java.util.List;
+/*
+ 메인 액티비티에서 메모리스트 어댑터
+ */
 
 public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
 
@@ -32,10 +35,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     OnitemLongClickInterface long_listner;
     Context context;
 
+
+
     public interface OnitemClickInterface {
         void onItemClick(View v, int pos);
     }
 
+    //메모를 길게 클릭시 발생하는 이벤트 인터페이스(메인 액티비티에서 구현)
     public interface OnitemLongClickInterface {
         void onItemLongClick(View v, int pos);
     }
@@ -87,6 +93,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
             this.thumbnail=itemView.findViewById(R.id.list_thumbnail);
             this.thumbnail.setClipToOutline(true);
 
+            //아이템 클릭 ,롱클릭 이벤트처리
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,9 +102,6 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                     if (pos != RecyclerView.NO_POSITION) {
 
                         listner.onItemClick(v,pos);
-
-//                        Memo clicked_memo = datas.get(pos);
-//                        Log.e("clicked: ", "" + pos);
 
 
 
@@ -127,6 +131,10 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
         public void bind(Memo m) {
 
 
+            /*
+            데이터를 뷰홀더에 바인딩
+            Glide 라이브러리 사용
+             */
             this.title.setText(m.getTitle());
             this.content.setText(m.getContent());
 
@@ -137,7 +145,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                         .placeholder(R.drawable.ic_watch_later_indigo_100_24dp)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .error(R.drawable.ic_error_outline_red_600_24dp)
-                        .listener(new RequestListener<Drawable>() {
+                        .listener(new RequestListener<Drawable>() {//이미지 로딩 실패시 이벤트
                             @Override
                             public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                                 Toast.makeText(context,"이미지 로딩에 실패하였습니다. 인터넷 연결을 확인하거나 올바른 URL주소를 입력하세요",Toast.LENGTH_LONG).show();

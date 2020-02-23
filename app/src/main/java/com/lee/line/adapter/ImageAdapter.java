@@ -23,10 +23,17 @@ import com.lee.line.R;
 
 import java.util.ArrayList;
 
+/*
+메모상세보기, 메모쓰기에서 보이는 첨부이미지 RecyclerView
+ */
+
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
     ArrayList<String> img_list;
     Context context;
+
+    //long click, click  리스너 인터페이스 선언
+    //인터페이스는 activity에서 구현
 
     OnitemLongClickInterface long_listner;
     OnitemClickInterface listner;
@@ -60,12 +67,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        /*
+        Glide 라이브러리를 이용하여 이미지 로드
+         */
+
         Glide.with(holder.itemView.getContext())
                 .load(Uri.parse(img_list.get(position)))
                 .placeholder(R.drawable.ic_watch_later_indigo_100_24dp)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .error(R.drawable.ic_error_outline_red_600_24dp)
-                .listener(new RequestListener<Drawable>() {
+                .listener(new RequestListener<Drawable>() { //이미지 로딩 실패처리
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                         Toast.makeText(context,"이미지 로딩에 실패하였습니다. 인터넷 연결을 확인하거나 올바른 URL주소를 입력하세요",Toast.LENGTH_LONG).show();
@@ -77,7 +88,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                         return false;
                     }
                 })
-                .into(holder.image);
+                .into(holder.image); //이미지 뷰에 바인드
 
     }
 
@@ -94,6 +105,10 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             super(itemView);
             image = itemView.findViewById(R.id.grid_img);
             image.setClipToOutline(true);
+
+            /*
+            길게 클릭, 클릭시 이벤트설정
+             */
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

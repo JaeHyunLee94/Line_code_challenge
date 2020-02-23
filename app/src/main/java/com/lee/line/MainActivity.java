@@ -26,20 +26,24 @@ import java.util.Arrays;
 
 import static com.lee.line.util.ResourceManager.free_memory;
 
+/*
+main activity 에서는 메모 리스트를 보여줌
+ */
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, ListAdapter.OnitemClickInterface, ListAdapter.OnitemLongClickInterface {
 
-    private final long FINISH_INTERVAL_TIME = 2000;
+    private final long FINISH_INTERVAL_TIME = 2000; //뒤로가기 2초 연속 연타시 앱 종료
     private long   backPressedTime = 0;
 
 
     ArrayList<Memo> memo_list;
     RecyclerView main_rv;
 
-    String FILE_NAME = "memo_file";
-    String SP_KEY_NAME = "memo_list";
+    String FILE_NAME = "memo_file"; //sharedPreference 에 저장할 파일 이름
+    String SP_KEY_NAME = "memo_list";//파일 key name
     SelectActionDialog selectdialog;
     SharedPreferences sp;
-    ListAdapter adapter;
+    ListAdapter adapter; //메모 리스트 adapter
 
 
     @Override
@@ -67,6 +71,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -92,7 +99,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void save_memo() {
-        Gson gson = new Gson();
+    /*
+        메모 리스트 정보를 json 문자열로 변환하여 sharedpreference에 저장
+     */
+        Gson gson = new Gson(); //json 라이브러리
 
         String json_string = gson.toJson(memo_list);
 
@@ -103,7 +113,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+
+
     private ArrayList<Memo> load_memo() {
+        /*
+        저장해놓은 메모가 있다면 불러오고 아니라면 새로운 메모리스트 객체생성후 반환
+         */
 
         sp = getSharedPreferences(FILE_NAME, MODE_PRIVATE);
         String json_string = sp.getString(SP_KEY_NAME, "");
@@ -115,9 +130,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             Gson gson = new Gson();
             Memo[] m_array = gson.fromJson(json_string, Memo[].class);
-            for (int i = 0; i < m_array.length; i++) {
-                Log.e("load_exist_memo", "title: " + m_array[i].getTitle() + "content: " + m_array[i].getContent());
-            }
             return new ArrayList<>(Arrays.asList(m_array));
 
         }
@@ -134,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int pos;
         switch (resultCode) {
 
-            case ResultCode.RESULT_EDIT_COMPLETED:
+            case ResultCode.RESULT_EDIT_COMPLETED: //메모 편집이 끝났을 경우 data update
 
                 title = (String) data.getStringExtra("title");
                 content = (String) data.getStringExtra("content");
@@ -145,13 +157,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Memo m = new Memo(title, content);
                 m.setImglist(img_list);
 
-                memo_list.set(pos, m);// 객체 생성 않고 바꾸기??
+                memo_list.set(pos, m);
 
                 adapter.notifyItemChanged(pos);//뒤로가기 버튼 누르기
 
                 break;
 
-            case ResultCode.RESULT_NEW_COMPLETED:
+            case ResultCode.RESULT_NEW_COMPLETED: //새로운 메모가 생성되었을 경우 data update
 
 
                 title = (String) data.getExtras().get("title");
@@ -165,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 adapter.notifyDataSetChanged();
                 break;
 
-            case ResultCode.RESULT_DELETE_MEMO:
+            case ResultCode.RESULT_DELETE_MEMO: //메모가 삭제되었을 경우 data update
 
                 pos = data.getIntExtra("pos", -1);
 
@@ -195,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onItemClick(View v, int pos) {
 
-        //item click
+        //memo item click 콜백 메서드
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("REQUEST_CODE", RequestCode.REQUEST_DETAIL);
         intent.putExtra("title", memo_list.get(pos).getTitle());
@@ -209,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onItemLongClick(View v, int pos) {
-
+       //memo item long click 콜백 메서드
         selectdialog = new SelectActionDialog(this, pos, memo_list, adapter);
         selectdialog.show();
 

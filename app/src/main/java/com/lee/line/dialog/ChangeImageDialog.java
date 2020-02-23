@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import com.lee.line.R;
 import com.lee.line.WriteActivity;
 
+/*
+ 이미지 첨부 취소를 묻는 다이럴로그
+ */
+
 public class ChangeImageDialog extends Dialog implements View.OnClickListener {
 
     Button change_img;
@@ -39,11 +43,10 @@ public class ChangeImageDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_change_image);
 
-//        change_img=findViewById(R.id.dialog_replace_img);
         cancel=findViewById(R.id.dialog_canel);
         delete=findViewById(R.id.dialog_remove_img);
 
-//        change_img.setOnClickListener(this);
+
         cancel.setOnClickListener(this);
         delete.setOnClickListener(this);
 
@@ -54,12 +57,7 @@ public class ChangeImageDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-//            case R.id.dialog_replace_img:
-//
-//
-//                this.dismiss();
-//
-//                break;
+
 
             case R.id.dialog_canel:
 
