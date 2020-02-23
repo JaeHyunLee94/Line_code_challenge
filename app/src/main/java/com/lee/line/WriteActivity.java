@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -370,14 +369,12 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         if (requestCode == RequestCode.REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
             Uri uri = data.getData();
-            Log.e("take photo",uri.toString());
             img_list.add(uri.toString());
             adapter.notifyDataSetChanged();
 
         } else if (requestCode == RequestCode.REQUEST_ALBUM) {
             //앨범에서 가져왔을 경우
             Uri uri = data.getData();
-            Log.e("album ",uri.toString());
             ClipData clipData = data.getClipData();
 
             if (clipData != null) {//여러장 가져왔을 경우
