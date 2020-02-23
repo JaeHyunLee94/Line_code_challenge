@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -401,10 +400,10 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
                 if (!new_path.isEmpty()) {
-                    Log.e("album: ", new_path);
+                    img_list.add(new_path);
                 }
 
-                img_list.add(new_path);
+
             }
             adapter.notifyDataSetChanged();
 
