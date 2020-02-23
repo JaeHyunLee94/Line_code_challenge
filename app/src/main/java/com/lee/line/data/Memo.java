@@ -1,9 +1,5 @@
 package com.lee.line.data;
 
-import android.content.Context;
-import android.net.Uri;
-import android.widget.Toast;
-
 import java.util.ArrayList;
 
 /*
@@ -51,13 +47,6 @@ public class Memo {
     }
 
 
-    public void addImg(String url){
-        imglist.add(url);
-    }
-    public void addImg(Uri uri){
-        imglist.add(uri.toString());
-    }
-
 
 
     public String getTitle() {
@@ -68,8 +57,5 @@ public class Memo {
         return content;
     }
 
-    public void save(Context context) {
-        Toast.makeText(context,"MEMO SAVED",Toast.LENGTH_SHORT).show();
 
-    }
 }

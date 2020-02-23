@@ -3,7 +3,6 @@ package com.lee.line;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -124,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String json_string = sp.getString(SP_KEY_NAME, "");
 
         if (json_string.isEmpty()) {
-            Log.e("load_new_memo", "load_memo and new array created");
             return new ArrayList<>();
 
         } else {

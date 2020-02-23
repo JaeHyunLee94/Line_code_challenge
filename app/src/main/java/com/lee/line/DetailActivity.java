@@ -7,7 +7,6 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -122,9 +121,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.detail_btn_edit:
 
-                Toast.makeText(this, "clock", Toast.LENGTH_SHORT).show();
                 intent = new Intent(this, WriteActivity.class);
-
                 intent.putExtra("REQUEST_CODE", RequestCode.REQUEST_EDIT_MEMO);
                 intent.putExtra("title", title);
                 intent.putExtra("content", content);

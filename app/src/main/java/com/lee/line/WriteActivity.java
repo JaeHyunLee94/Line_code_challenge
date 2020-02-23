@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -138,16 +139,18 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
 
     //메모 로드
     private void load_memo() {
+        /*
+        writeActivity 는 DetailActivity 와는 다르게 img_list 를 딥 카피 히야함(변경사항이 없을 수도 있으므로)
+         */
         Intent intent = getIntent();
+        img_list=new ArrayList<>();
         CODE = (int) intent.getExtras().get("REQUEST_CODE");
         if (CODE == RequestCode.REQUEST_EDIT_MEMO) {
             et_title.setText(intent.getExtras().getString("title"));
             et_content.setText(intent.getExtras().getString("content"));//img list 넣
-            img_list = (ArrayList<String>) intent.getExtras().get("img_list");
+            img_list .addAll((ArrayList<String>) intent.getExtras().get("img_list"));
 
 
-        } else {
-            img_list = new ArrayList<String>();
         }
     }
 
@@ -367,12 +370,14 @@ public class WriteActivity extends AppCompatActivity implements View.OnClickList
         if (requestCode == RequestCode.REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
 
             Uri uri = data.getData();
+            Log.e("take photo",uri.toString());
             img_list.add(uri.toString());
             adapter.notifyDataSetChanged();
 
         } else if (requestCode == RequestCode.REQUEST_ALBUM) {
             //앨범에서 가져왔을 경우
             Uri uri = data.getData();
+            Log.e("album ",uri.toString());
             ClipData clipData = data.getClipData();
 
             if (clipData != null) {//여러장 가져왔을 경우

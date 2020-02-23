@@ -44,6 +44,11 @@ public class ResourceManager {
             }
             if (count == img_list.size()) {
                 Toast.makeText(context, "성공적으로 삭제되었습니다.", Toast.LENGTH_LONG).show();
+            }else {
+
+                Log.e("Memory Leak in clip", "there is leaking memory in external storage");
+                Log.e("count ",""+count);
+                Log.e("img_list size ", ""+img_list);
             }
 
 
@@ -56,7 +61,7 @@ public class ResourceManager {
                 Toast.makeText(context, "성공적으로 삭제되었습니다.", Toast.LENGTH_LONG).show();
 
             } else {
-                Log.e("Memory Leak", "there is leaking memory in external storage");
+                Log.e("Memory Leak one", "there is leaking memory in external storage");
             }
 
         }

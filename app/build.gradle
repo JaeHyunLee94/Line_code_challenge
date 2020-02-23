@@ -32,7 +32,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'gun0912.ted:tedpermission:2.2.3'
-    //외부 라이브러리
+    //
 
 
     testImplementation 'junit:junit:4.13'
